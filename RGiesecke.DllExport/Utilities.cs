@@ -97,26 +97,9 @@ namespace RGiesecke.DllExport
 
         private static string CreateTempDirectoryCore()
         {
-            string path1 = (string)null;
-            try
-            {
-                string tempFileName = Path.GetTempFileName();
-                if(!string.IsNullOrEmpty(tempFileName) && File.Exists(tempFileName))
-                {
-                    File.Delete(tempFileName);
-                }
-                string path2 = Path.Combine(Path.GetFullPath(Path.GetDirectoryName(tempFileName)), Path.GetFileNameWithoutExtension(tempFileName));
-                Directory.CreateDirectory(path2);
-                return path2;
-            }
-            catch
-            {
-                if(!string.IsNullOrEmpty(path1) && Directory.Exists(path1))
-                {
-                    Directory.Delete(path1, true);
-                }
-                throw;
-            }
+            string path2 = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(path2);
+            return path2;
         }
     }
 }
